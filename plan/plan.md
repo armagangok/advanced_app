@@ -289,6 +289,7 @@ Phases can overlap; focus on outcomes and proof via projects.
 ---
 
 ### Resource Index
+- Architecture & Code Quality guide: `plan/Architecture & Code Quaility.md`
 - Flutter docs: `https://docs.flutter.dev/`
 - Dart language tour: `https://dart.dev/guides/language/language-tour`
 - Effective Dart: `https://dart.dev/guides/language/effective-dart`
