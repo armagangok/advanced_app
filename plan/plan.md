@@ -19,14 +19,15 @@ Mark each item: [ ] Not started  [~] Some practice  [x] Confident in production
 - [ ] Apply SOLID principles in Flutter codebases
 - [ ] Use feature-first or layer-first modularization consistently
 - [ ] Implement Clean Architecture in a medium app
-- [ ] Apply dependency inversion with DI (get_it/riverpod)
+- [ ] Apply dependency inversion with DI (Riverpod providers; optionally get_it)
 - [ ] Identify and extract cross-cutting concerns
 - [ ] Maintain code health (lint rules, conventions, dead code removal)
 
-#### State Management
-- [ ] Choose state solution per feature complexity
-- [ ] Master two paradigms (e.g., Bloc + Riverpod)
-- [ ] Structure state for testability and performance
+#### State Management (Riverpod-first)
+- [ ] Choose the simplest Riverpod pattern that works (state/provider/async)
+- [ ] Master Riverpod deeply (providers, families, AsyncValue, codegen)
+- [ ] Understand alternatives (Bloc, Provider) and when to interop
+- [ ] Structure providers for testability, performance, and modularity
 - [ ] Handle edge cases (caching, pagination, retries, offline)
 
 #### Performance & Reliability
@@ -98,7 +99,7 @@ Mark each item: [ ] Not started  [~] Some practice  [x] Confident in production
 - [ ] Example: Codemagic pipelines for multi-flavor releases
 - [ ] Example: Building and publishing a public package
 
-🧠 Tip: Keep one “growth log” per week. Write 3 bullets: what I shipped, what I learned, where I got stuck.
+🧠 Tip: For Riverpod, document chosen provider graph per feature and track rebuild counts before/after using `select`/scoped providers.
 
 ---
 
@@ -110,8 +111,10 @@ Phases can overlap; focus on outcomes and proof via projects.
 - Architecture refresh
   - Re-implement a medium feature using Clean Architecture
   - Introduce DI (get_it or Riverpod providers) and modularize by feature
-- State management depth
-  - Build the same feature with Bloc and Riverpod; compare complexity/perf
+- State management depth (Riverpod)
+  - Build a feature with Riverpod (providers, families, AsyncValue)
+  - Add provider layering: repository/service providers consumed by UI
+  - Optional: compare with Bloc to document trade-offs
 - Testing baseline
   - Add unit + widget + a golden test to an existing app
 - Tooling
@@ -137,7 +140,7 @@ Phases can overlap; focus on outcomes and proof via projects.
 - Testing maturity
   - Introduce golden tests and integration tests in CI
 
-⚡ Project: “Offline-first Notes” — Notes app with sync, delta-merge, conflict UI. Use Riverpod/Bloc, Drift, background sync with isolates.
+⚡ Project: “Offline-first Notes” — Notes app with sync, delta-merge, conflict UI. Use Riverpod, Drift, background sync with isolates.
 
 🔗 Resources
 - DevTools guide: `https://docs.flutter.dev/tools/devtools/overview`
@@ -185,10 +188,13 @@ Phases can overlap; focus on outcomes and proof via projects.
 - Keep UI dumb; map domain → presentation models
 - Isolate infrastructure (API/DB) behind repositories
 
-#### Advanced State Management
-- When to use Bloc vs Riverpod vs ValueNotifier
+#### Advanced State Management (Riverpod)
+- When to use Riverpod vs alternatives (Bloc, Provider, ValueNotifier)
 - Patterns: state machines, sealed states, union types with freezed
-- Side-effects: repository or service layer, not inside widgets
+- Side-effects in services/repositories; keep widgets declarative
+- Provider families for parameterized state; `ref.listen` for reactions
+- Use `AsyncValue` for async UI states; model errors and retries explicitly
+- Prefer `select`/scoped providers to minimize rebuilds
 
 #### Performance Profiling & Optimization
 - Minimize rebuilds (selective providers, keys, const widgets)
@@ -201,6 +207,7 @@ Phases can overlap; focus on outcomes and proof via projects.
 - Golden tests for design regressions
 - Contract tests for API models/mappers
 - Deterministic fixtures and fakes; hermetic tests in CI
+- Override providers in tests via `ProviderScope(overrides: [...])`
 
 #### CI/CD & Automation
 - Enforce format/lints, tests, and size/perf budgets on PRs
@@ -285,8 +292,10 @@ Phases can overlap; focus on outcomes and proof via projects.
 - Flutter docs: `https://docs.flutter.dev/`
 - Dart language tour: `https://dart.dev/guides/language/language-tour`
 - Effective Dart: `https://dart.dev/guides/language/effective-dart`
-- Bloc: `https://bloclibrary.dev/#/`
 - Riverpod: `https://riverpod.dev`
+- riverpod_lint: `https://pub.dev/packages/riverpod_lint`
+- riverpod_generator: `https://pub.dev/packages/riverpod_generator`
+- Bloc (reference): `https://bloclibrary.dev/#/`
 - DevTools: `https://docs.flutter.dev/tools/devtools/overview`
 - Animations: `https://docs.flutter.dev/development/ui/animations`
 - Testing: `https://docs.flutter.dev/cookbook/testing/`
@@ -302,5 +311,3 @@ Phases can overlap; focus on outcomes and proof via projects.
 - Constraints (time/week, device matrix, team size):
 
 🔎 Optional next step: Tell me your strong/weak areas and goals, and I’ll tailor the roadmap intensity, project picks, and resource depth to your situation.
-
-
